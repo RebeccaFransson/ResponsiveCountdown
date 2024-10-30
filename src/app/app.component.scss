@@ -1,13 +1,87 @@
+$primary-bg-color: #f5f3f3;
+$nc-color: #72045d;
 
-main {
-  width: 100%;
+.main {
+  padding: 24px;
   min-height: 100vh;
   display: flex;
+  gap: 100px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  background-color: $primary-bg-color;
+  font-family: Open Sauce One;
 
-  h1 {
-    font-size: 6rem;
+  .title {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+
+    h1 {
+      font-size: 26px;
+      color: $nc-color;
+      font-weight: 800;
+      margin: 0;
+    }
+    h2 {
+      font-size: 28px;
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    .inputGroup {
+      position: relative;
+      width: 100%;
+
+      input {
+        background-color: transparent;
+        width: 100%;
+        border-width: 1px;
+        border-radius: 8px;
+        border-color: black;
+        box-sizing: border-box;
+        padding: 16px 16px;
+        font-size: 14px;
+
+        &:focus,
+        &:focus-visible {
+          outline: none;
+
+          + label {
+            top: -8px;
+            left: 8px;
+            font-size: 14px;
+          }
+        }
+      }
+      label {
+        position: absolute;
+        left: 14px;
+        top: 16px;
+        background-color: $primary-bg-color;
+        padding: 0 4px;
+        font-size: 16px;
+        font-family: Open Sauce One;
+
+        transition:
+          top 300ms ease,
+          left 300ms ease;
+
+        &.hasValue {
+          top: -8px;
+          left: 8px;
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
