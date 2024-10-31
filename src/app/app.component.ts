@@ -16,8 +16,8 @@ export class AppComponent {
   timer: any
   countDown = ''
   form = new FormGroup({
-    title: new FormControl(''),
-    date: new FormControl(''),
+    title: new FormControl('Summer'),
+    date: new FormControl('2025-05-05'),
   })
 
   ngOnInit() {
