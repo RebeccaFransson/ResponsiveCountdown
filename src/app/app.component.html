@@ -1,9 +1,11 @@
 <main class="main">
   <div class="title">
-    @if (form.get('title')?.value !== '' && form.get('date')?.value !== '') {
-      <h1>Time to {{ form.get('title')?.value }}</h1>
-      <h2>{{ countDown }}</h2>
-    }
+    <h1 id="title">
+      @if (displayedTitle) {
+        Time to {{ displayedTitle }}
+      }
+    </h1>
+    <h2 id="countDown">{{ countDown }}</h2>
   </div>
   <form [formGroup]="form" class="inputs">
     <div class="inputGroup">

@@ -16,19 +16,25 @@ $layout-breakpoint-small: 800px;
   .title {
     display: flex;
     flex-direction: column;
+    justify-items: center;
     gap: 16px;
     text-align: center;
+    transition: font-size 300ms ease;
 
     h1 {
-      font-size: 26px;
       color: $nc-color;
-      font-weight: 800;
       margin: 0;
+      width: fit-content;
+      font-size: 26px;
+      font-weight: 800;
+      white-space: nowrap;
     }
     h2 {
-      font-size: 28px;
       margin: 0;
+      width: fit-content;
+      font-size: 28px;
       font-weight: 400;
+      white-space: nowrap;
     }
   }
   .inputs {

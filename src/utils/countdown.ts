@@ -13,11 +13,9 @@ export const calculateTimeUntil = (date: Date) => {
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24)
   const days = Math.floor(total / (1000 * 60 * 60 * 24))
   let string = ''
-  if (seconds)
-    string = `${days | hours | minutes ? ',' : ''} ${seconds} ${seconds === 1 ? 'sec' : 'secs'}`
-  if (minutes)
-    string = `${days | hours ? ',' : ''} ${minutes} ${minutes === 1 ? 'min' : 'mins'}${string}`
-  if (hours) string = `${days ? ',' : ''} ${hours} ${hours === 1 ? 'hr' : 'hrs'}${string}`
+  if (seconds) string = `${days | hours | minutes ? ',' : ''} ${seconds}s`
+  if (minutes) string = `${days | hours ? ',' : ''} ${minutes}m${string}`
+  if (hours) string = `${days ? ',' : ''} ${hours}h${string}`
   if (days) string = `${days} ${days === 1 ? 'day' : 'days'}${string}`
   return string
 }

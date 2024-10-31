@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { CommonModule } from '@angular/common'
 import { debounceTime } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
+import { setFontSizeBasedOnLength } from '../utils/fontSize'
 
 @Component({
   selector: 'app-root',
@@ -19,23 +20,23 @@ export class AppComponent {
     title: new FormControl('Summer'),
     date: new FormControl('2025-05-05'),
   })
+  displayedTitle = 'Summer'
 
   ngOnInit() {
+    //setFontSizeBasedOnLength('Time to ' + this.displayedTitle, 'title')
     this.form
       .get('title')
       ?.valueChanges.pipe(debounceTime(500))
-      .subscribe(data => {
-        console.log('New title:', data)
-      })
-    this.form
-      .get('date')
-      ?.valueChanges.pipe(debounceTime(500))
-      .subscribe(data => {
-        console.log('New date:', data)
+      .subscribe(title => {
+        console.log('New title:', title)
+        if (title) {
+          setFontSizeBasedOnLength('title')
+        }
+        this.displayedTitle = title ?? ''
       })
 
     const ONE_SEC = 1000
-    this.timer = setInterval(() => {
+    this.timer = setInterval(async () => {
       // Code to execute every 1000ms
       console.log('Interval function running')
       const date = this.form.get('date')?.value
@@ -53,6 +54,7 @@ export class AppComponent {
         } else {
           this.countDown = calculateTimeUntil(endDate)
         }
+        setFontSizeBasedOnLength('countDown')
       }
     }, ONE_SEC)
   }
