@@ -1,20 +1,20 @@
 <main class="main">
-  @if (title) {
-    <div class="title">
-      <h1>Time to {{ title }}</h1>
+  <div class="title">
+    @if (form.get('title')?.value !== '' && form.get('date')?.value !== '') {
+      <h1>Time to {{ form.get('title')?.value }}</h1>
       <h2>{{ countDown }}</h2>
-    </div>
-  }
-  <div class="inputs">
-    <div class="inputGroup">
-      <input class="input" type="text" [(ngModel)]="title" />
-      <label [ngClass]="{ hasValue: title !== '' }">Title</label>
-    </div>
-    <div class="inputGroup">
-      <input class="input" type="text" [(ngModel)]="date" />
-      <label [ngClass]="{ hasValue: date }">Date</label>
-    </div>
+    }
   </div>
+  <form [formGroup]="form" class="inputs">
+    <div class="inputGroup">
+      <input class="input" type="text" formControlName="title" />
+      <label [ngClass]="{ hasValue: form.get('title')?.value !== '' }">Title</label>
+    </div>
+    <div class="inputGroup">
+      <input class="input" type="text" formControlName="date" />
+      <label [ngClass]="{ hasValue: form.get('date')?.value !== '' }">Date</label>
+    </div>
+  </form>
 </main>
 
 <router-outlet />

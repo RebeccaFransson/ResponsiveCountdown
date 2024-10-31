@@ -10,8 +10,14 @@ to let you know anyway.
 ### More stuff I would like to add
 
 - Reset button
-- Saving it to a user, which would require a login
+- Add more validation
+- Saving it to a user, which would require a login or (if this data isnt private) some kind of code
+  and identifies the title/countdown
 - Sharing it with other users/email addresses
+- Share updates with the user when the countdown hits certain mile stones. Eg. 30days, 10days and so
+  on.
+- I would also definitly add some testing, both unit testing and the UI/end-to-end(which might be a
+  bit of a overkill in this case).
 
 # Description & requirements
 
