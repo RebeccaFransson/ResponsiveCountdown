@@ -20,7 +20,9 @@ to let you know anyway.
   bit of a overkill in this case).
 - I would like to take another stab at the font-size-calculator. I'm not happy with the fact that
   there is a need for a 1ms timeout - but it was the only way to give some time to update the
-  fontsize on the element before needing to check if it's the correct size.
+  fontsize on the element before needing to check if it's the correct size. And it's unfortunately
+  not bulletproof. I'm also not a fan of the inline styling.
+- Translations
 
 # Description & requirements
 

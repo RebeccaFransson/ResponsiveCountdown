@@ -11,39 +11,38 @@ export const setFontSizeBasedOnLength = async (id: string) => {
   const screenWidth = window.outerWidth - 75 // subtract padding
 
   // Needed a timeout here too otherwise the element.scrollWidth would not be correct to the updated text.
-  await new Promise(resolve => setTimeout(resolve, 1))
+  await new Promise(resolve => setTimeout(resolve, 10))
   let element = document.getElementById(id)
 
   if (element) {
     // If there is a fontSize from earlier, use that, otherwise go for 85px
     let fontSize = element.style.fontSize
       ? parseFloat(element.style.fontSize.slice(0, element.style.fontSize.length - 2))
-      : 60
+      : 30
 
     // If element is bigger than screenWidth
-    if (element.scrollWidth > screenWidth) {
-      while (screenWidth - element.scrollWidth < -10) {
+    if (screenWidth - element.scrollWidth < -7) {
+      while (screenWidth - element.scrollWidth < -7) {
         // ...down the font size
         fontSize--
         element.style.fontSize = `${fontSize}px`
         // Needed a micro waiting period here cuz otherwise the
         // element.scrollWidth didnt catch up and gave the old value -> infinitive loop
-        await new Promise(resolve => setTimeout(resolve, 1))
+        await new Promise(resolve => setTimeout(resolve, 10))
       }
     }
 
     // If element is smaller than screenWidth...
-    else if (element.scrollWidth < screenWidth) {
-      while (screenWidth - element.scrollWidth > 10) {
+    else if (screenWidth - element.scrollWidth > 7) {
+      while (screenWidth - element.scrollWidth > 7) {
         // ...up the font size
         fontSize++
         element.style.fontSize = `${fontSize}px`
         // Needed a micro waiting period here cuz otherwise the
         // element.scrollWidth didnt catch up and gave the old value -> infinitive loop
-        await new Promise(resolve => setTimeout(resolve, 1))
+        await new Promise(resolve => setTimeout(resolve, 10))
       }
-    } else {
-      element.style.fontSize = `${fontSize}px`
     }
+    // If not too big or too small, do nothing.
   }
 }

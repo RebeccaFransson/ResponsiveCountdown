@@ -16,7 +16,7 @@ $layout-breakpoint-small: 800px;
   .title {
     display: flex;
     flex-direction: column;
-    justify-items: center;
+    align-items: center;
     gap: 16px;
     text-align: center;
     transition: font-size 300ms ease;
@@ -25,14 +25,14 @@ $layout-breakpoint-small: 800px;
       color: $nc-color;
       margin: 0;
       width: fit-content;
-      font-size: 26px;
+      font-size: 40px;
       font-weight: 800;
       white-space: nowrap;
     }
     h2 {
       margin: 0;
       width: fit-content;
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 400;
       white-space: nowrap;
     }

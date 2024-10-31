@@ -2,9 +2,10 @@ import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime, map } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnLength } from '../utils/fontSize'
+import { fromEvent, type Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-root',
@@ -23,12 +24,11 @@ export class AppComponent {
   displayedTitle = 'Summer'
 
   ngOnInit() {
-    //setFontSizeBasedOnLength('Time to ' + this.displayedTitle, 'title')
+    setFontSizeBasedOnLength('title')
     this.form
       .get('title')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe(title => {
-        console.log('New title:', title)
         if (title) {
           setFontSizeBasedOnLength('title')
         }
@@ -38,7 +38,6 @@ export class AppComponent {
     const ONE_SEC = 1000
     this.timer = setInterval(async () => {
       // Code to execute every 1000ms
-      console.log('Interval function running')
       const date = this.form.get('date')?.value
       const today = new Date()
       if (date) {
@@ -57,6 +56,11 @@ export class AppComponent {
         setFontSizeBasedOnLength('countDown')
       }
     }, ONE_SEC)
+
+    fromEvent(window, 'resize').subscribe(() => {
+      setFontSizeBasedOnLength('countDown')
+      setFontSizeBasedOnLength('title')
+    })
   }
   ngOnDestroy() {
     // Clear the interval on component destroy

@@ -3,8 +3,8 @@
  * that shows how many days, hours, minutes and seconds
  * there is left until the given date.
  *
- * @param date eg. 2025-01-01
- * @returns string eg. "58 days, 3 h, 15m, 10s"
+ * @param date eg. 2025-05-05
+ * @returns string eg. "185 days, 14h, 58m, 25s"
  */
 export const calculateTimeUntil = (date: Date) => {
   const total = date.getTime() - new Date().getTime()
