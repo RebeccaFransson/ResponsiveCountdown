@@ -9,11 +9,11 @@
   </div>
   <form [formGroup]="form" class="inputs">
     <div class="inputGroup">
-      <input class="input" type="text" formControlName="title" />
+      <input class="input" type="text" formControlName="title" maxlength="35" />
       <label [ngClass]="{ hasValue: form.get('title')?.value !== '' }">Title</label>
     </div>
     <div class="inputGroup">
-      <input class="input" type="text" formControlName="date" />
+      <input class="input" type="text" formControlName="date" maxlength="10" />
       <label [ngClass]="{ hasValue: form.get('date')?.value !== '' }">Date</label>
     </div>
   </form>

@@ -7,23 +7,25 @@ perfect without having the figma dev-tool. So I did my best with the data that I
 figma sketch. I understand that the design here is not the purpose of this assignment, just wanted
 to let you know anyway.
 
+I'm looking forward to seeing your solution to this problem. It was a fun assignment, but it was
+tricky! Tricky in a way that I didn't expect - I found myself trying to fine tune it way too long!
+Even though my solution isn't bulletproof it gave me the most accurate(/biggest) font size for the
+two h-tags. What I would like to change about my solution is the need for a 1ms timeout - but it was
+the only way to give some time to update the font size on the element before checking the new width
+with the new font size. I'm also not a fan of the inline styling.
+
 ### More stuff I would like to add
 
 - Reset button
-- Add more validation
+- Add more validation: to the input fields, number/- only possible in date input
 - Saving it to a user, which would require a login or (if this data isnt private) some kind of code
   and identifies the title/countdown
 - Sharing it with other users/email addresses
 - Share updates with the user when the countdown hits certain mile stones. Eg. 30days, 10days and so
   on.
 - Translations
-- I would also add some more testing, both unit testing and the UI/end-to-end(which might be a bit
-  of a overkill in this case).
-- I would like to take another stab at the font-size-calculator. I'm not happy with the fact that
-  there is a need for a 1ms timeout - but it was the only way to give some time to update the font
-  size on the element before checking the width with the new font size. And it's unfortunately not
-  bulletproof. I'm also not a fan of the inline styling. But from all the options that though about
-  this would give me the most accurate font size.
+- I would also add some more testing, both unit testing and the UI/end-to-end(which I though would
+  be a bit of a overkill in this case).
 
 # Description & requirements
 
