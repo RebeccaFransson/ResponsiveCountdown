@@ -16,13 +16,14 @@ to let you know anyway.
 - Sharing it with other users/email addresses
 - Share updates with the user when the countdown hits certain mile stones. Eg. 30days, 10days and so
   on.
-- I would also definitly add some testing, both unit testing and the UI/end-to-end(which might be a
-  bit of a overkill in this case).
-- I would like to take another stab at the font-size-calculator. I'm not happy with the fact that
-  there is a need for a 1ms timeout - but it was the only way to give some time to update the
-  fontsize on the element before needing to check if it's the correct size. And it's unfortunately
-  not bulletproof. I'm also not a fan of the inline styling.
 - Translations
+- I would also add some more testing, both unit testing and the UI/end-to-end(which might be a bit
+  of a overkill in this case).
+- I would like to take another stab at the font-size-calculator. I'm not happy with the fact that
+  there is a need for a 1ms timeout - but it was the only way to give some time to update the font
+  size on the element before checking the width with the new font size. And it's unfortunately not
+  bulletproof. I'm also not a fan of the inline styling. But from all the options that though about
+  this would give me the most accurate font size.
 
 # Description & requirements
 
