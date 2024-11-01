@@ -21,8 +21,8 @@ export const setFontSizeBasedOnLength = async (id: string) => {
       : 30
 
     // If element is bigger than screenWidth
-    if (screenWidth - element.scrollWidth < -7) {
-      while (screenWidth - element.scrollWidth < -7) {
+    if (screenWidth - element.scrollWidth < -10) {
+      while (screenWidth - element.scrollWidth < -10) {
         // ...down the font size
         fontSize--
         element.style.fontSize = `${fontSize}px`
@@ -33,8 +33,8 @@ export const setFontSizeBasedOnLength = async (id: string) => {
     }
 
     // If element is smaller than screenWidth...
-    else if (screenWidth - element.scrollWidth > 7) {
-      while (screenWidth - element.scrollWidth > 7) {
+    else if (screenWidth - element.scrollWidth > 10) {
+      while (screenWidth - element.scrollWidth > 10) {
         // ...up the font size
         fontSize++
         element.style.fontSize = `${fontSize}px`

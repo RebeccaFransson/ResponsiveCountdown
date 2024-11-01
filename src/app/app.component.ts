@@ -7,6 +7,7 @@ import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnLength } from '../utils/fontSize'
 import { fromEvent, type Subscription } from 'rxjs'
 import { CountdownStorage } from '../utils/localStorage'
+import { isValidDate } from '../utils/validation'
 
 @Component({
   selector: 'app-root',
@@ -19,10 +20,11 @@ export class AppComponent {
   timer: any
   countDown = ''
   form = new FormGroup({
-    title: new FormControl(CountdownStorage.get()?.title),
-    date: new FormControl(CountdownStorage.get()?.date),
+    title: new FormControl(CountdownStorage.get()?.title ?? ''),
+    date: new FormControl(CountdownStorage.get()?.date ?? ''),
   })
   displayedTitle = CountdownStorage.get()?.title ?? ''
+  countdownDate: Date | null = new Date(CountdownStorage.get()?.date ?? '')
 
   ngOnInit() {
     setFontSizeBasedOnLength('title')
@@ -40,37 +42,43 @@ export class AppComponent {
     this.form
       .get('date')
       ?.valueChanges.pipe(debounceTime(500))
-      .subscribe(date => {
-        if (date) {
+      .subscribe(dateString => {
+        if (dateString === '') {
+          this.countDown = '👀'
+          this.countdownDate = null
+          return
+        }
+        // Validation on the string, save it as a date
+        if (dateString && isValidDate(dateString) && !isNaN(new Date(dateString).getTime())) {
           // Save date when it changes
-          CountdownStorage.setDate(date)
+          CountdownStorage.setDate(dateString)
+          this.countdownDate = new Date(dateString)
+        } else {
+          this.countDown = 'Invalid date❌🗓️, 🙃you silly!😜'
+          this.countdownDate = null
+          setFontSizeBasedOnLength('countDown')
         }
       })
 
     const ONE_SEC = 1000
     this.timer = setInterval(async () => {
-      // Code to execute every 1000ms
-      const date = this.form.get('date')?.value
+      // Use saved Date-type to calculate countdown
+      const date = this.countdownDate
+      if (!date) return
       const today = new Date()
-      if (date) {
-        const endDate = new Date(date)
-        if (!isNaN(endDate.getTime())) {
-          if (
-            today.getFullYear() === endDate.getFullYear() &&
-            today.getMonth() === endDate.getMonth() &&
-            today.getDate() === endDate.getDate()
-          ) {
-            this.countDown = 'Today is the daaaay!!'
-          } else if (today > endDate) {
-            this.countDown = 'This date has passed'
-          } else {
-            this.countDown = calculateTimeUntil(endDate)
-          }
-          setFontSizeBasedOnLength('countDown')
-        } else {
-          this.countDown = 'Invalid date, you silly.'
-        }
+      const endDate = new Date(date)
+      if (
+        today.getFullYear() === endDate.getFullYear() &&
+        today.getMonth() === endDate.getMonth() &&
+        today.getDate() === endDate.getDate()
+      ) {
+        this.countDown = "Ceeeeeelebrate good times, c'mon!! 🎉🥳🎶✨"
+      } else if (today > endDate) {
+        this.countDown = 'Should probably pick a date in the future.. 🤔📅?'
+      } else {
+        this.countDown = calculateTimeUntil(endDate)
       }
+      setFontSizeBasedOnLength('countDown')
     }, ONE_SEC)
 
     fromEvent(window, 'resize').subscribe(() => {

@@ -5,7 +5,7 @@ export const CountdownStorage = {
   get: () => {
     const json = localStorage.getItem(COUNTDOWN_DATA_KEY)
     const isCountdownData = (data: any): data is CountdownData => {
-      return true
+      return data.date && data.title
     }
     if (json) {
       const obj = JSON.parse(json)
