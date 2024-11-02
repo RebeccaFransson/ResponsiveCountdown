@@ -1,3 +1,5 @@
+https://responsive-countdown.vercel.app/
+
 # Comments from the developer
 
 This was a super fun assignment with a good mini challenge!
@@ -25,6 +27,8 @@ I'm excited to hear from you and see your solutions to this problem.
 - Translations
 - I would also add some more testing, both unit testing and the UI/end-to-end(which I thought would
   be a bit of a overkill in this case).
+
+![Screenshot of project](./src/assets/images/screenshot.png)
 
 ---
 
