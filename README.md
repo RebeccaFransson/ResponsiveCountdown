@@ -1,31 +1,32 @@
 # Comments from the developer
 
-Hi fellow developers! I'm looking forward to your feedback on this assignment for NC. I've not been
-active in angular in a few years so I feel like I might have done some things that isn't best
-practise, so please forgive me - I'm a react-girly! It was also impossible to the get design pixel
-perfect without having the figma dev-tool. So I did my best with the data that I could get from the
-figma sketch. I understand that the design here is not the purpose of this assignment, just wanted
-to let you know anyway.
+This was a super fun assignment with a good mini challenge!
 
-I'm looking forward to seeing your solution to this problem. It was a fun assignment, but it was
-tricky! Tricky in a way that I didn't expect - I found myself trying to fine tune it way too long!
-Even though my solution isn't bulletproof it gave me the most accurate(/biggest) font size for the
-two h-tags. What I would like to change about my solution is the need for a 1ms timeout - but it was
-the only way to give some time to update the font size on the element before checking the new width
-with the new font size. I'm also not a fan of the inline styling.
+My solution with the while-loop provides the most accurate (and largest) font size for the two
+h-tags from the solutions that I've gone though. What I would like to work more on about my solution
+is the need for a 1ms timeout; however, that was the only way I could allow time for the font size
+to update on the element before checking the new width. I'm also not a fan of the inline styling.
 
-### More stuff I would like to add
+It was also impossible to get the design pixel-perfect without having the Figma dev tool. I did my
+best with the data I could gather from the Figma sketch. I understand that design isn't the primary
+focus of this assignment, but I just wanted to mention it anyway as this is a frontend role.
+
+I'm excited to hear from you and see your solutions to this problem.
+
+### Suggestions of how this solution can be improved
 
 - Reset button
 - Add more validation: to the input fields, number/- only possible in date input
 - Saving it to a user, which would require a login or (if this data isnt private) some kind of code
   and identifies the title/countdown
 - Sharing it with other users/email addresses
-- Share updates with the user when the countdown hits certain mile stones. Eg. 30days, 10days and so
-  on.
+- Share updates/send notifications with the user when the countdown hits certain mile stones. Eg.
+  30days, 10days and so on.
 - Translations
-- I would also add some more testing, both unit testing and the UI/end-to-end(which I though would
+- I would also add some more testing, both unit testing and the UI/end-to-end(which I thought would
   be a bit of a overkill in this case).
+
+---
 
 # Description & requirements
 
