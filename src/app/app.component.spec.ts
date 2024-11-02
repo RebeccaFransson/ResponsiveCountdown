@@ -31,13 +31,6 @@ describe('AppComponent', () => {
     fixture = TestBed.createComponent(AppComponent)
     component = fixture.componentInstance
 
-    // Mock the screen.width
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 400,
-    })
-
     fixture.detectChanges()
   })
   afterEach(() => {

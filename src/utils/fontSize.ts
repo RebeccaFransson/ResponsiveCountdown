@@ -7,7 +7,7 @@
  * until the text as close to the screens borders as possible
  * @param id string
  */
-export const setFontSizeBasedOnLength = async (id: string) => {
+export const setFontSizeBasedOnScreenWidth = async (id: string) => {
   const element = document.getElementById(id)
   const containerElement = document.querySelector('main')
 

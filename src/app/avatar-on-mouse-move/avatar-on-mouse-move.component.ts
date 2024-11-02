@@ -8,12 +8,8 @@ import { fromEvent } from 'rxjs'
   styleUrls: ['./avatar-on-mouse-move.component.scss'],
 })
 export class AvatarOnMouseMoveComponent {
-  title: string = 'Hello, Angular!'
-  description: string = 'This is a simple example component.'
-
   ngOnInit() {
     fromEvent<MouseEvent>(window, 'mousemove').subscribe((e: MouseEvent) => {
-      console.log('mousemove')
       const image = document.getElementById('emojiImage')
       if (image) {
         const y = e.clientY
