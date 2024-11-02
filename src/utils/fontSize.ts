@@ -9,13 +9,16 @@
  */
 export const setFontSizeBasedOnLength = async (id: string) => {
   const element = document.getElementById(id)
-  const screenWidth = window.outerWidth - 75 // Subtract padding
+  const containerElement = document.querySelector('main')
+
   const maxIterations = 500 // Set a limit for iterations to prevent infinite loop
 
   // Small delay to ensure the DOM has updated before starting
   await new Promise(resolve => setTimeout(resolve, 10))
 
   if (!element || element.textContent === '') return
+  if (!containerElement) return
+  const screenWidth = containerElement.clientWidth - 75 // Subtract padding
 
   let fontSize = element.style.fontSize ? parseFloat(element.style.fontSize) : 30
 
