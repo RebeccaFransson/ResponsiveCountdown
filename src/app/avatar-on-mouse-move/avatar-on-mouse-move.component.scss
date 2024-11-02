@@ -1,0 +1,14 @@
+$layout-breakpoint-small: 800px;
+
+.avatar {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  @media (max-width: $layout-breakpoint-small) {
+    width: 70px;
+    height: 70px;
+  }
+}

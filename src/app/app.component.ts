@@ -8,11 +8,12 @@ import { setFontSizeBasedOnLength } from '../utils/fontSize'
 import { fromEvent } from 'rxjs'
 import { CountdownStorage } from '../utils/localStorage'
 import { isValidDate } from '../utils/validation'
+import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mouse-move.component'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ReactiveFormsModule],
+  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, AvatarOnMouseMoveComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -79,14 +80,10 @@ export class AppComponent {
       } else {
         this.countDown = calculateTimeUntil(endDate)
       }
-      setFontSizeBasedOnLength('countDown')
+      //setFontSizeBasedOnLength('countDown')
     }, ONE_SEC)
 
     fromEvent(window, 'resize').subscribe(() => {
-      setFontSizeBasedOnLength('countDown')
-      setFontSizeBasedOnLength('title')
-    })
-    screen.orientation.addEventListener('change', function (e) {
       setFontSizeBasedOnLength('countDown')
       setFontSizeBasedOnLength('title')
     })

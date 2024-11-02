@@ -38,18 +38,6 @@ describe('AppComponent', () => {
       value: 400,
     })
 
-    // Mock screen.orientation
-    Object.defineProperty(window.screen, 'orientation', {
-      writable: true,
-      configurable: true,
-      value: {
-        type: 'portrait-primary',
-        angle: 0,
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-      },
-    })
-
     fixture.detectChanges()
   })
   afterEach(() => {

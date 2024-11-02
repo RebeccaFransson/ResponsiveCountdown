@@ -1,103 +1,106 @@
+@import '../styles.scss';
 $primary-bg-color: #f5f3f3;
 $nc-color: #72045d;
-$layout-breakpoint-small: 800px;
+$layout-breakpoint-small: 650px;
 
 .main {
-  padding: 0 24px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-
   background-color: $primary-bg-color;
   font-family: Open Sauce One;
+  padding: 0 24px;
 
-  .title {
+  .flex {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    gap: 16px;
-    text-align: center;
-    transition: font-size 300ms ease;
+    min-height: 100vh;
 
-    h1 {
-      color: $nc-color;
-      margin: 0;
-      width: fit-content;
-      font-size: 40px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-    h2 {
-      margin: 0;
-      width: fit-content;
-      font-size: 30px;
-      font-weight: 400;
-      white-space: nowrap;
-    }
-  }
-  .inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 42px;
-    width: 100%;
-    padding: 0 24px;
-    box-sizing: border-box;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+      transition: font-size 300ms ease;
 
-    @media (min-width: $layout-breakpoint-small) {
-      flex-direction: row;
-      gap: 28px;
-      justify-content: center;
-      width: fit-content;
+      h1 {
+        color: $nc-color;
+        margin: 0;
+        width: fit-content;
+        font-size: 40px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      h2 {
+        margin: 0;
+        width: fit-content;
+        font-size: 30px;
+        font-weight: 400;
+        white-space: nowrap;
+      }
     }
-
-    .inputGroup {
-      position: relative;
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
       width: 100%;
+      padding: 0 24px;
+      box-sizing: border-box;
 
-      input {
-        background-color: transparent;
+      @media (min-width: $layout-breakpoint-small) {
+        flex-direction: row;
+        gap: 28px;
+        justify-content: center;
+        width: fit-content;
+      }
+
+      .inputGroup {
+        position: relative;
         width: 100%;
-        border-width: 1px;
-        border-radius: 4px;
-        border-color: black;
-        box-sizing: border-box;
-        padding: 16px 16px;
-        font-size: 14px;
 
-        &:focus,
-        &:focus-visible {
-          outline: none;
+        input {
+          background-color: transparent;
+          width: 100%;
+          border-width: 1px;
+          border-radius: 4px;
+          border-color: black;
+          box-sizing: border-box;
+          padding: 16px 16px;
+          font-size: 14px;
 
-          + label {
+          &:focus,
+          &:focus-visible {
+            outline: none;
+
+            + label {
+              top: -8px;
+              left: 8px;
+              font-size: 14px;
+            }
+          }
+
+          @media (min-width: $layout-breakpoint-small) {
+            width: 300px;
+          }
+        }
+        label {
+          position: absolute;
+          left: 14px;
+          top: 16px;
+          background-color: $primary-bg-color;
+          padding: 0 4px;
+          font-size: 16px;
+          font-family: Open Sauce One;
+
+          transition:
+            top 300ms ease,
+            left 300ms ease;
+
+          &.hasValue {
             top: -8px;
             left: 8px;
             font-size: 14px;
           }
-        }
-
-        @media (min-width: $layout-breakpoint-small) {
-          width: 300px;
-        }
-      }
-      label {
-        position: absolute;
-        left: 14px;
-        top: 16px;
-        background-color: $primary-bg-color;
-        padding: 0 4px;
-        font-size: 16px;
-        font-family: Open Sauce One;
-
-        transition:
-          top 300ms ease,
-          left 300ms ease;
-
-        &.hasValue {
-          top: -8px;
-          left: 8px;
-          font-size: 14px;
         }
       }
     }

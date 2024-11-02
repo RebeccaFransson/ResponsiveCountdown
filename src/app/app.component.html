@@ -1,24 +1,29 @@
 <main class="main">
-  <div class="title">
-    <h1 id="title" style="font-size: 40px">
-      @if (displayedTitle) {
-        Time to {{ displayedTitle }}
-      }
-    </h1>
-    <h2 id="countDown" style="font-size: 30px">{{ countDown }}</h2>
+  <div class="flex">
+    <div class="title">
+      <h1 id="title" style="font-size: 40px">
+        @if (displayedTitle) {
+          Time to {{ displayedTitle }}
+        }
+      </h1>
+      <h2 id="countDown" style="font-size: 30px">{{ countDown }}</h2>
+    </div>
+    <form [formGroup]="form" class="inputs">
+      <div class="inputGroup">
+        <input id="title-input" class="input" type="text" formControlName="title" maxlength="35" />
+        <label for="title-input" [ngClass]="{ hasValue: form.get('title')?.value !== '' }"
+          >Title</label
+        >
+      </div>
+      <div class="inputGroup">
+        <input id="date-input" class="input" type="text" formControlName="date" maxlength="10" />
+        <label for="date-input" [ngClass]="{ hasValue: form.get('date')?.value !== '' }"
+          >Date</label
+        >
+      </div>
+    </form>
   </div>
-  <form [formGroup]="form" class="inputs">
-    <div class="inputGroup">
-      <input id="title-input" class="input" type="text" formControlName="title" maxlength="35" />
-      <label for="title-input" [ngClass]="{ hasValue: form.get('title')?.value !== '' }"
-        >Title</label
-      >
-    </div>
-    <div class="inputGroup">
-      <input id="date-input" class="input" type="text" formControlName="date" maxlength="10" />
-      <label for="date-input" [ngClass]="{ hasValue: form.get('date')?.value !== '' }">Date</label>
-    </div>
-  </form>
+  <avatar-on-mouse-move />
 </main>
 
 <router-outlet />
