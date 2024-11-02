@@ -1,5 +1,4 @@
 import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { debounceTime } from 'rxjs/operators'
@@ -13,7 +12,7 @@ import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mou
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ReactiveFormsModule, AvatarOnMouseMoveComponent],
+  imports: [CommonModule, ReactiveFormsModule, AvatarOnMouseMoveComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
