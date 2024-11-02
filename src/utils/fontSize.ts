@@ -8,41 +8,44 @@
  * @param id string
  */
 export const setFontSizeBasedOnLength = async (id: string) => {
-  const screenWidth = window.outerWidth - 75 // subtract padding
+  const element = document.getElementById(id)
+  const screenWidth = window.outerWidth - 75 // Subtract padding
+  const maxIterations = 500 // Set a limit for iterations to prevent infinite loop
 
-  // Needed a timeout here too otherwise the element.scrollWidth would not be correct to the updated text.
+  // Small delay to ensure the DOM has updated before starting
   await new Promise(resolve => setTimeout(resolve, 10))
-  let element = document.getElementById(id)
 
-  if (element) {
-    // If there is a fontSize from earlier, use that, otherwise go for 85px
-    let fontSize = element.style.fontSize
-      ? parseFloat(element.style.fontSize.slice(0, element.style.fontSize.length - 2))
-      : 30
+  if (!element || element.textContent === '') return
 
-    // If element is bigger than screenWidth
-    if (screenWidth - element.scrollWidth < -10) {
-      while (screenWidth - element.scrollWidth < -10) {
-        // ...down the font size
-        fontSize--
-        element.style.fontSize = `${fontSize}px`
-        // Needed a micro waiting period here cuz otherwise the
-        // element.scrollWidth didnt catch up and gave the old value -> infinitive loop
-        await new Promise(resolve => setTimeout(resolve, 10))
-      }
+  let fontSize = element.style.fontSize ? parseFloat(element.style.fontSize) : 30
+
+  // Function to adjust font size
+  const adjustFontSize = (decrease: boolean) => {
+    if (decrease) {
+      fontSize--
+    } else {
+      fontSize++
+    }
+    element.style.fontSize = `${fontSize}px`
+  }
+
+  let iterations = 0
+
+  while (iterations < maxIterations) {
+    const overflow = screenWidth - element.scrollWidth
+
+    if (overflow < -10) {
+      adjustFontSize(true) // Decrease font size
+    } else if (overflow > 10) {
+      adjustFontSize(false) // Increase font size
+    } else {
+      break // Exit if within bounds
     }
 
-    // If element is smaller than screenWidth...
-    else if (screenWidth - element.scrollWidth > 10) {
-      while (screenWidth - element.scrollWidth > 10) {
-        // ...up the font size
-        fontSize++
-        element.style.fontSize = `${fontSize}px`
-        // Needed a micro waiting period here cuz otherwise the
-        // element.scrollWidth didnt catch up and gave the old value -> infinitive loop
-        await new Promise(resolve => setTimeout(resolve, 10))
-      }
-    }
-    // If not too big or too small, do nothing.
+    iterations++
+  }
+
+  if (iterations === maxIterations) {
+    throw new Error(`Font size adjustment exceeded maximum iterations for element: ${id}`)
   }
 }

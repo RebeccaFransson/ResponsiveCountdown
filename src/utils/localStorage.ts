@@ -5,7 +5,7 @@ export const CountdownStorage = {
   get: () => {
     const json = localStorage.getItem(COUNTDOWN_DATA_KEY)
     const isCountdownData = (data: any): data is CountdownData => {
-      return data.date && data.title
+      return data.hasOwnProperty('date') && data.hasOwnProperty('title')
     }
     if (json) {
       const obj = JSON.parse(json)
@@ -18,11 +18,11 @@ export const CountdownStorage = {
     return null
   },
   setTitle: (title: string) => {
-    const data = CountdownStorage.get()
+    const data = CountdownStorage.get() ?? { title: '', date: '' }
     localStorage.setItem(COUNTDOWN_DATA_KEY, JSON.stringify({ ...data, title }))
   },
   setDate: (date: string) => {
-    const data = CountdownStorage.get()
+    const data = CountdownStorage.get() ?? { title: '', date: '' }
     localStorage.setItem(COUNTDOWN_DATA_KEY, JSON.stringify({ ...data, date }))
   },
 }

@@ -1,30 +1,32 @@
 import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
-import { debounceTime, map } from 'rxjs/operators'
+import { debounceTime } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnLength } from '../utils/fontSize'
-import { fromEvent, type Subscription } from 'rxjs'
+import { fromEvent } from 'rxjs'
 import { CountdownStorage } from '../utils/localStorage'
 import { isValidDate } from '../utils/validation'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterOutlet, CommonModule, ReactiveFormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   timer: any
   countDown = ''
+  private titleFromStorage = CountdownStorage.get()?.title ?? ''
+  private dateFromStorage = CountdownStorage.get()?.date ?? ''
   form = new FormGroup({
-    title: new FormControl(CountdownStorage.get()?.title ?? ''),
-    date: new FormControl(CountdownStorage.get()?.date ?? ''),
+    title: new FormControl(this.titleFromStorage),
+    date: new FormControl(this.dateFromStorage),
   })
-  displayedTitle = CountdownStorage.get()?.title ?? ''
-  countdownDate: Date | null = new Date(CountdownStorage.get()?.date ?? '')
+  displayedTitle = this.titleFromStorage
+  countdownDate: Date | null = this.dateFromStorage ? new Date(this.dateFromStorage) : null
 
   ngOnInit() {
     setFontSizeBasedOnLength('title')
@@ -44,7 +46,7 @@ export class AppComponent {
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe(dateString => {
         if (dateString === '') {
-          this.countDown = '👀'
+          this.countDown = ''
           this.countdownDate = null
           return
         }
@@ -54,7 +56,7 @@ export class AppComponent {
           CountdownStorage.setDate(dateString)
           this.countdownDate = new Date(dateString)
         } else {
-          this.countDown = 'Invalid date❌🗓️, 🙃you silly!😜'
+          this.countDown = 'Invalid date❌🗓️🙃, you silly!😜'
           this.countdownDate = null
           setFontSizeBasedOnLength('countDown')
         }
@@ -63,10 +65,9 @@ export class AppComponent {
     const ONE_SEC = 1000
     this.timer = setInterval(async () => {
       // Use saved Date-type to calculate countdown
-      const date = this.countdownDate
-      if (!date) return
+      if (!this.countdownDate) return
       const today = new Date()
-      const endDate = new Date(date)
+      const endDate = new Date(this.countdownDate)
       if (
         today.getFullYear() === endDate.getFullYear() &&
         today.getMonth() === endDate.getMonth() &&
@@ -74,7 +75,7 @@ export class AppComponent {
       ) {
         this.countDown = "Ceeeeeelebrate good times, c'mon!! 🎉🥳🎶✨"
       } else if (today > endDate) {
-        this.countDown = 'Should probably pick a date in the future.. 🤔📅?'
+        this.countDown = 'You should probably pick a date in the future.. 🤔📅?'
       } else {
         this.countDown = calculateTimeUntil(endDate)
       }
@@ -82,6 +83,10 @@ export class AppComponent {
     }, ONE_SEC)
 
     fromEvent(window, 'resize').subscribe(() => {
+      setFontSizeBasedOnLength('countDown')
+      setFontSizeBasedOnLength('title')
+    })
+    screen.orientation.addEventListener('change', function (e) {
       setFontSizeBasedOnLength('countDown')
       setFontSizeBasedOnLength('title')
     })
