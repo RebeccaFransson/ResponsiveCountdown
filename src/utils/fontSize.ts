@@ -11,7 +11,7 @@ export const setFontSizeBasedOnScreenWidth = async (id: string) => {
   const element = document.getElementById(id)
   const containerElement = document.querySelector('main')
 
-  const maxIterations = 500 // Set a limit for iterations to prevent infinite loop
+  const maxIterations = 10000 // Set a limit for iterations to prevent infinite loop
 
   // Small delay to ensure the DOM has updated before starting
   await new Promise(resolve => setTimeout(resolve, 10))

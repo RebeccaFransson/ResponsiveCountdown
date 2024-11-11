@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime, throttleTime } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnScreenWidth } from '../utils/fontSize'
 import { fromEvent } from 'rxjs'
@@ -80,10 +80,12 @@ export class AppComponent {
       setFontSizeBasedOnScreenWidth('countDown')
     }, 1000)
 
-    fromEvent(window, 'resize').subscribe(() => {
-      setFontSizeBasedOnScreenWidth('countDown')
-      setFontSizeBasedOnScreenWidth('title')
-    })
+    fromEvent(window, 'resize')
+      .pipe(throttleTime(500))
+      .subscribe(() => {
+        setFontSizeBasedOnScreenWidth('countDown')
+        setFontSizeBasedOnScreenWidth('title')
+      })
   }
   ngOnDestroy() {
     // Clear the interval on component destroy
