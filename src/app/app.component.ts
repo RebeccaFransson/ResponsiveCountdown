@@ -31,7 +31,15 @@ export class AppComponent {
 
   constructor(countDownStorageService: CountDownStorageService) {
     this.storageService = countDownStorageService
-    const storageData = countDownStorageService.get()
+
+    let storageData = null
+    try {
+      storageData = countDownStorageService.get()
+    } catch (error) {
+      // log error
+    }
+
+    // Set variables that is depenent on storage service
     this.dateFromStorage = storageData?.date ?? ''
     this.titleFromStorage = storageData?.title ?? ''
     this.form = new FormGroup({
