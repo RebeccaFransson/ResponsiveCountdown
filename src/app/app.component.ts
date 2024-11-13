@@ -5,10 +5,9 @@ import { debounceTime, throttleTime } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnScreenWidth } from '../utils/fontSize'
 import { fromEvent, type Subscription } from 'rxjs'
-import { CountdownStorage, type CountdownData } from '../utils/localStorage'
 import { isValidDate } from '../utils/validation'
 import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mouse-move.component'
-import { CountDownStorageService } from '../services/localStorage.service'
+import { CountDownStorageService, type CountdownData } from '../services/localStorage.service'
 
 @Component({
   selector: 'app-root',
@@ -18,7 +17,7 @@ import { CountDownStorageService } from '../services/localStorage.service'
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private storage: CountdownData | null
+  private storageService: CountDownStorageService
   private dateFromStorage: string
   private titleFromStorage: string
   private titleSubscr: Subscription | undefined = undefined
@@ -31,9 +30,10 @@ export class AppComponent {
   public countDown: string = ''
 
   constructor(countDownStorageService: CountDownStorageService) {
-    this.storage = countDownStorageService.get()
-    this.dateFromStorage = this.storage?.date ?? ''
-    this.titleFromStorage = this.storage?.title ?? ''
+    this.storageService = countDownStorageService
+    const storageData = countDownStorageService.get()
+    this.dateFromStorage = storageData?.date ?? ''
+    this.titleFromStorage = storageData?.title ?? ''
     this.form = new FormGroup({
       title: new FormControl(this.titleFromStorage),
       date: new FormControl(this.dateFromStorage),
@@ -50,7 +50,7 @@ export class AppComponent {
       .subscribe(title => {
         if (title) {
           setFontSizeBasedOnScreenWidth('title')
-          CountdownStorage.setTitle(title)
+          this.storageService.setTitle(title)
         }
         this.displayedTitle = title ?? ''
       })
@@ -66,7 +66,7 @@ export class AppComponent {
         }
         // Validation on the string and save the string to storage
         if (dateString && isValidDate(dateString) && !isNaN(new Date(dateString).getTime())) {
-          CountdownStorage.setDate(dateString)
+          this.storageService.setDate(dateString)
           this.countdownDate = new Date(dateString)
         } else {
           this.countDown = 'Invalid date❌🗓️🙃, you silly!😜'
