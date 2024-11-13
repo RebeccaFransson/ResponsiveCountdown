@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common'
 import { debounceTime, throttleTime } from 'rxjs/operators'
 import { calculateTimeUntil } from '../utils/countdown'
 import { setFontSizeBasedOnScreenWidth } from '../utils/fontSize'
-import { fromEvent } from 'rxjs'
-import { CountdownStorage } from '../utils/localStorage'
+import { fromEvent, type Subscription } from 'rxjs'
+import { CountdownStorage, type CountdownData } from '../utils/localStorage'
 import { isValidDate } from '../utils/validation'
 import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mouse-move.component'
 
@@ -17,20 +17,24 @@ import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mou
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  timer: any
-  countDown = ''
-  private titleFromStorage = CountdownStorage.get()?.title ?? ''
-  private dateFromStorage = CountdownStorage.get()?.date ?? ''
-  form = new FormGroup({
+  private storage: CountdownData | null = CountdownStorage.get()
+  private dateFromStorage: string = this.storage?.date ?? ''
+  private titleFromStorage: string = this.storage?.title ?? ''
+  private titleSubscr: Subscription | undefined = undefined
+  private dateSubscr: Subscription | undefined = undefined
+
+  public timer: NodeJS.Timeout | null = null
+  public countDown: string = ''
+  public form: FormGroup = new FormGroup({
     title: new FormControl(this.titleFromStorage),
     date: new FormControl(this.dateFromStorage),
   })
-  displayedTitle = this.titleFromStorage
-  countdownDate: Date | null = this.dateFromStorage ? new Date(this.dateFromStorage) : null
+  public displayedTitle: string = this.titleFromStorage
+  public countdownDate: Date | null = this.dateFromStorage ? new Date(this.dateFromStorage) : null
 
   ngOnInit() {
     setFontSizeBasedOnScreenWidth('title')
-    this.form
+    this.titleSubscr = this.form
       .get('title')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe(title => {
@@ -41,7 +45,7 @@ export class AppComponent {
         this.displayedTitle = title ?? ''
       })
 
-    this.form
+    this.dateSubscr = this.form
       .get('date')
       ?.valueChanges.pipe(debounceTime(500))
       .subscribe(dateString => {
@@ -92,5 +96,8 @@ export class AppComponent {
     if (this.timer) {
       clearInterval(this.timer)
     }
+    // Clean up subscriptions
+    this.titleSubscr?.unsubscribe()
+    this.dateSubscr?.unsubscribe()
   }
 }

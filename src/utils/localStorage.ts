@@ -1,8 +1,8 @@
 const COUNTDOWN_DATA_KEY = 'COUNTDOWN_DATA'
-type CountdownData = { title: string; date: string }
+export type CountdownData = { title: string; date: string }
 
 export const CountdownStorage = {
-  get: () => {
+  get: (): CountdownData | null => {
     const json = localStorage.getItem(COUNTDOWN_DATA_KEY)
     const isCountdownData = (data: any): data is CountdownData => {
       return data.hasOwnProperty('date') && data.hasOwnProperty('title')

@@ -6,7 +6,7 @@
  * @param date eg. 2025-05-05
  * @returns string eg. "185 days, 14h, 58m, 25s"
  */
-export const calculateTimeUntil = (date: Date) => {
+export const calculateTimeUntil = (date: Date): string => {
   const total = date.getTime() - new Date().getTime()
   const seconds = Math.floor((total / 1000) % 60)
   const minutes = Math.floor((total / 1000 / 60) % 60)
