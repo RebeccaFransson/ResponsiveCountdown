@@ -8,6 +8,7 @@ import { fromEvent, type Subscription } from 'rxjs'
 import { CountdownStorage, type CountdownData } from '../utils/localStorage'
 import { isValidDate } from '../utils/validation'
 import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mouse-move.component'
+import { CountDownStorageService } from '../services/localStorage.service'
 
 @Component({
   selector: 'app-root',
@@ -17,20 +18,29 @@ import { AvatarOnMouseMoveComponent } from './avatar-on-mouse-move/avatar-on-mou
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private storage: CountdownData | null = CountdownStorage.get()
-  private dateFromStorage: string = this.storage?.date ?? ''
-  private titleFromStorage: string = this.storage?.title ?? ''
+  private storage: CountdownData | null
+  private dateFromStorage: string
+  private titleFromStorage: string
   private titleSubscr: Subscription | undefined = undefined
   private dateSubscr: Subscription | undefined = undefined
 
+  public form: FormGroup
+  public displayedTitle: string
+  public countdownDate: Date | null
   public timer: NodeJS.Timeout | null = null
   public countDown: string = ''
-  public form: FormGroup = new FormGroup({
-    title: new FormControl(this.titleFromStorage),
-    date: new FormControl(this.dateFromStorage),
-  })
-  public displayedTitle: string = this.titleFromStorage
-  public countdownDate: Date | null = this.dateFromStorage ? new Date(this.dateFromStorage) : null
+
+  constructor(countDownStorageService: CountDownStorageService) {
+    this.storage = countDownStorageService.get()
+    this.dateFromStorage = this.storage?.date ?? ''
+    this.titleFromStorage = this.storage?.title ?? ''
+    this.form = new FormGroup({
+      title: new FormControl(this.titleFromStorage),
+      date: new FormControl(this.dateFromStorage),
+    })
+    this.displayedTitle = this.titleFromStorage
+    this.countdownDate = this.dateFromStorage ? new Date(this.dateFromStorage) : null
+  }
 
   ngOnInit() {
     setFontSizeBasedOnScreenWidth('title')
