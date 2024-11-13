@@ -3,16 +3,14 @@ import { AppComponent } from './app.component'
 import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule } from '@angular/forms'
 import { RouterOutlet } from '@angular/router'
-import { CountdownStorage } from '../utils/localStorage'
+import { CountDownStorageService } from '../services/localStorage.service'
 
 // Mock the CountdownStorage utility to isolate the component test
-jest.mock('../utils/localStorage', () => ({
-  CountdownStorage: {
-    get: jest.fn(() => ({ title: '', date: '' })),
-    setTitle: jest.fn(),
-    setDate: jest.fn(),
-  },
-}))
+const mockedCountDownStorageService = {
+  get: jest.fn(() => ({ title: '', date: '' })),
+  setTitle: jest.fn(),
+  setDate: jest.fn(),
+}
 
 describe('AppComponent', () => {
   let component: AppComponent
@@ -26,6 +24,12 @@ describe('AppComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [AppComponent, RouterOutlet, CommonModule, ReactiveFormsModule],
+      providers: [
+        {
+          provide: CountDownStorageService,
+          useValue: mockedCountDownStorageService,
+        },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(AppComponent)
@@ -66,7 +70,7 @@ describe('AppComponent', () => {
 
     // Check if the title has been updated
     expect(displayDiv.textContent).toBe(` Time to ${testText} `)
-    expect(CountdownStorage.setTitle).toHaveBeenCalledWith(testText)
+    expect(mockedCountDownStorageService.setTitle).toHaveBeenCalledWith(testText)
   })
 
   it('date | add date to input | countdown changes + localstorage updates', () => {
@@ -92,7 +96,7 @@ describe('AppComponent', () => {
     // Check if the countdown has been updated
     expect(displayDiv.textContent).toMatch(/^\d+ day(s)?, \d+h, \d+m, \d+s$/)
     expect(displayDiv.textContent).toContain('1 day, ')
-    expect(CountdownStorage.setDate).toHaveBeenCalledWith(testText)
+    expect(mockedCountDownStorageService.setDate).toHaveBeenCalledWith(testText)
   })
   it('date | date is today | should display the celebration message', async () => {
     const inputElement: HTMLInputElement = fixture.nativeElement.querySelector(
@@ -132,6 +136,6 @@ describe('AppComponent', () => {
 
     // Check if the countdown message shows an error for invalid date
     expect(displayDiv.textContent).toContain('Invalid date❌🗓️🙃, you silly!😜')
-    expect(CountdownStorage.setDate).not.toHaveBeenCalled() // Ensure that setDate was not called
+    expect(mockedCountDownStorageService.setDate).not.toHaveBeenCalled() // Ensure that setDate was not called
   })
 })
